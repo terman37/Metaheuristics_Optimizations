@@ -53,11 +53,11 @@ pg.set_global_rng_seed(seed=37)
 prob = pg.problem(shifted_rosen(DIM, search_space, f_xstar))
 print(prob)
 
-# algo = pg.algorithm(pg.pso(gen=10))
-algo = pg.algorithm(pg.nlopt(solver='neldermead'))
+algo = pg.algorithm(pg.pso(gen=100))
+# algo = pg.algorithm(pg.nlopt(solver='neldermead'))
 algo.set_verbosity(1)
 
-pop = pg.population(prob, 1)
+pop = pg.population(prob, 10)
 
 t1 = time.time()
 pop = algo.evolve(pop)
