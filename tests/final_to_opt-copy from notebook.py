@@ -11,10 +11,22 @@ import pygmo as pg
 
 # parameters
 
-func_name = 'rosenbrock'
+func_name = 'schwefel'
 search_space = (-100, 100)
 
-funcs = {"sphere": 0, "schwefel": 1, "rosenbrock": 2, "rastrigin": 3, "griewank": 4, "ackley": 5}
+funcs = {"sphere": 0,
+         "schwefel": 1,
+         "rosenbrock": 2,
+         "rastrigin": 3,
+         "griewank": 4,
+         "ackley": 5}
+
+funcs_dispname = {"sphere": "F1 : Shifted Sphere Function",
+                  "schwefel": "F2 : Schwefel’s Problem 2.21",
+                  "rosenbrock": "F3 : Shifted Rosenbrock’s Function",
+                  "rastrigin": "F4 : Shifted Rastrigin’s Function",
+                  "griewank": "F5 : Shifted Griewank’s Function",
+                  "ackley": "F6 : Shifted Ackley’s Function"}
 
 val_path = os.path.join('../data/', func_name + '.csv')
 bias_path = '../data/f_bias.csv'
@@ -36,7 +48,7 @@ def eval_fitness(x, dim):
             z = x[i] - funcval[i]
             F += z * z
         result = F + funcbias
-    elif func_name == "schwevel":
+    elif func_name == "schwefel":
         F = abs(x[0])
         for i in range(dim - 1):
             z = x[i] - funcval[i]
@@ -95,58 +107,61 @@ class My_problem:
         return x_min, x_max
 
 
-def solve_pb(dim, my_algo, bounds, optim, pop_size):
+def solve_pb(dim, my_algo, bounds, optim, popsize):
     prob = pg.problem(My_problem(dim, bounds, optim))
-    pop = pg.population(prob, pop_size)
+    pop = pg.population(prob, popsize)
 
     my_algo.set_verbosity(1)
 
     t1 = time.time()
-    pop = algo.evolve(pop)
+    pop = my_algo.evolve(pop)
     t2 = time.time()
 
-    time_diff = t2-t1
+    time_diff = t2 - t1
 
-    # why get_fevals return 0 ?
-    nb_evals = prob.get_fevals()
+    if my_algo.get_name() == "PSO: Particle Swarm Optimization":
+        extract_algo = my_algo.extract(pg.pso)
+        log = extract_algo.get_log()
+        curve = [x[2] for x in log]
+        niter = log[-1][0]
 
-    return pop, time_diff
+    return pop, curve, niter, time_diff
 
 
-def print_solution(my_algo, pop_evolved, duration):
-
+def print_solution(my_algo, pop_evolved, log, niter, duration):
     algorithm_name = my_algo.get_name()
     parameters = my_algo.get_extra_info()
     solution_x = pop_evolved.champion_x
     fitness = pop_evolved.champion_f[0]
+    n_evals = pop_evolved.problem.get_fevals()
 
+    print("Function: %s" % funcs_dispname[func_name])
+    print("Global Optimum: %.2f\n" % funcbias)
     print("Algorithm: %s" % algorithm_name)
-    print("Parameters: %s" % parameters)
-    print("Solution: ", solution_x)
+    print("Parameters: \n%s\n" % parameters)
     print("Fitness: %f" % fitness)
-
-    extract_algo = my_algo.extract(pg.pso)
-    log = extract_algo.get_log()
-    gbest = [x[2] for x in log]
-    plt.plot(gbest)
-    plt.show()
-
-    # print("Nb of functions evaluations: %d in %d iterations" % (prob.get_fevals(), 0))
-    # print("Stopping criterion: %s" % result.message)
-
+    print("Solution: \n", solution_x)
+    print("\nNb of functions evaluations: %d" % n_evals)
+    print("Stopping criterion: after %d iterations" % niter)
     print("computational time: %.3f seconds" % duration)
 
-    gbest = [x[1] for x in log]
-    plt.plot(gbest)
+    plt.plot(log)
+    plt.show()
+
+#     gbest = [x[1] for x in log]
+#     plt.plot(gbest)
 
 
 # Solve problem in dimension 50
 DIM = 50
+
 # define algorithm and parameters to use
-algo = pg.algorithm(pg.pso(gen=200))
-pop_size = 100
+algo = pg.algorithm(pg.gaco(gen=500))
+pop_size = 150
+
+
 # run algorithm and print solution
-pop_evolv, compute_time = solve_pb(dim=DIM, my_algo=algo, bounds=search_space, optim=funcbias, pop_size=100)
-print_solution(my_algo=algo, pop_evolved=pop_evolv, duration=compute_time)
+pop_evolv, logs, nit, compute_time = solve_pb(dim=DIM, my_algo=algo, bounds=search_space, optim=funcbias, popsize=pop_size)
+print_solution(my_algo=algo, pop_evolved=pop_evolv, log=logs, niter=nit, duration=compute_time)
 
 
