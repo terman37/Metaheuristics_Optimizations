@@ -23,6 +23,7 @@ class shifted_rosen:
         self.dimension = dim
         self.fitness_per_eval = []
         self.glob_opt = glob_opt
+        self.nb_evals = 0
 
     def fitness(self, x):
         F = 0
@@ -33,12 +34,16 @@ class shifted_rosen:
         for i in range(self.dimension - 2):
             F += 100 * ((z[i] ** 2 - z[i + 1]) ** 2) + (z[i] - 1) ** 2
         result = F + f_xstar
+        self.nb_evals += 1
         return [result]
 
     def get_bounds(self):
         x_min = self.lower_bound * np.ones(self.dimension)
         x_max = self.upper_bound * np.ones(self.dimension)
         return x_min, x_max
+
+    def get_fevals(self):
+        return self.nb_evals
 
     def get_name(self):
         return "Shifted RosenBrock Function"
@@ -53,11 +58,11 @@ pg.set_global_rng_seed(seed=37)
 prob = pg.problem(shifted_rosen(DIM, search_space, f_xstar))
 print(prob)
 
-# algo = pg.algorithm(pg.pso(gen=10))
-algo = pg.algorithm(pg.nlopt(solver='neldermead'))
+algo = pg.algorithm(pg.pso(gen=100))
+# algo = pg.algorithm(pg.nlopt(solver='neldermead'))
 algo.set_verbosity(1)
 
-pop = pg.population(prob, 1)
+pop = pg.population(prob, 10)
 
 t1 = time.time()
 pop = algo.evolve(pop)
@@ -71,6 +76,9 @@ print("Algorithm: %s" % prob.get_name())
 print("Solution: ", pop.champion_x)
 print("Fitness: %f" % pop.champion_f[0])
 # print("Nb of functions evaluations: %d in %d iterations" % (result.nfev,result.nit))
+
+
+
 print("Nb of functions evaluations: %d in %d iterations" % (prob.get_fevals(), 0))
 # print("Stopping criterion: %s" % result.message)
 
