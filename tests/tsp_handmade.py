@@ -286,7 +286,7 @@ rankRoutes(pop)[0][1]
 # In[16]:
 
 
-geneticAlgorithm(population=cityList, popSize=100, eliteSize=20, mutationRate=0.01, generations=500)
+geneticAlgorithm(population=cityList, popSize=10, eliteSize=5, mutationRate=0.01, generations=50)
 
 
 # ## Plot the progress
@@ -316,7 +316,7 @@ def geneticAlgorithmPlot(population, popSize, eliteSize, mutationRate, generatio
 # In[23]:
 
 
-geneticAlgorithmPlot(population=cityList, popSize=1000, eliteSize=200, mutationRate=0.01, generations=500)
+# geneticAlgorithmPlot(population=cityList, popSize=1000, eliteSize=200, mutationRate=0.01, generations=500)
 
 
 # In[ ]:

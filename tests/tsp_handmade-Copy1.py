@@ -9,7 +9,6 @@ from numba import jit
 
 
 # TSPLIB file reader
-
 def read_tsplib_file(filename):
     if filename is None:
         raise FileNotFoundError('Filename can not be None')
@@ -39,56 +38,14 @@ def read_tsplib_file(filename):
                 dist = round(dist)
                 matrix[k][j] = dist
                 matrix[j][k] = dist
-        return matrix, dimension, cities
+        mat = np.array(matrix)
+        return mat, dimension, cities
 
 
-# class City:
-#     def __init__(self, x, y):
-#         self.x = x
-#         self.y = y
-#
-#     def distance(self, city):
-#         xDis = abs(self.x - city.x)
-#         yDis = abs(self.y - city.y)
-#         distance = np.sqrt((xDis ** 2) + (yDis ** 2))
-#         return distance
-#
-#     def __repr__(self):
-#         return "(" + str(self.x) + "," + str(self.y) + ")"
-
-
-# class Fitness:
-#     def __init__(self, route):
-#         self.route = route
-#         self.distance = 0
-#         self.fitness= 0.0
-#
-#     def routeDistance(self):
-#         if self.distance ==0:
-#             pathDistance = 0
-#             for i in range(0, len(self.route)):
-#                 fromCity = self.route[i]
-#                 toCity = None
-#                 if i + 1 < len(self.route):
-#                     toCity = self.route[i + 1]
-#                 else:
-#                     toCity = self.route[0]
-#                 pathDistance += fromCity.distance(toCity)
-#             self.distance = pathDistance
-#         return self.distance
-#
-#     def routeFitness(self):
-#         if self.fitness == 0:
-#             self.fitness = 1 / float(self.routeDistance())
-#         return self.fitness
-
-
-# mod
-
-
+@jit(nopython=True)
 def routeFitness(pop):
     fitness = 0
-    for i in range(len(pop) - 1):
+    for i in range(pop.shape[0] - 1):
         x = pop[i]
         y = pop[i + 1]
         fitness += dist_matrix[x][y]
@@ -101,119 +58,137 @@ def createRoute(cityList):
     route = np.random.permutation(cityList)
     return route
 
+
 @jit(nopython=True)
 def initialPopulation(popSize, cityList):
-    population = []
+    population = np.empty((popSize, len(cityList)), dtype=np.int8)
     for i in range(0, popSize):
-        population.append(createRoute(cityList))  # create route ?
+        population[i] = createRoute(cityList)
     return population
 
 
+@jit(nopython=True)
 def rankRoutes(population):
-    fitnessResults = {}
-    for i in range(len(population)):
-        # fitnessResults[i] = Fitness(population[i]).routeFitness()
-        fitnessResults[i] = routeFitness(population[i])
-    return sorted(fitnessResults.items(), key=operator.itemgetter(1), reverse=False)
+    fitnessResults = np.empty((population.shape[0], 2), dtype=np.int32)
+    for i in range(population.shape[0]):
+        fitnessResults[i, 0] = i
+        fitnessResults[i, 1] = routeFitness(population[i])
+    fitnessResults = fitnessResults[np.argsort(fitnessResults[:, 1])]
+    return fitnessResults
 
 
+@jit(nopython=True)
 def selection(popRanked, eliteSize):
-    selectionResults = []
-    df = pd.DataFrame(np.array(popRanked), columns=["Index", "Fitness"])
-    df['cum_sum'] = df.Fitness.cumsum()
-    df['cum_perc'] = 100 * df.cum_sum / df.Fitness.sum()
-
+    selectionResults = np.empty((popRanked.shape[0],), dtype=np.int8)
+    select = np.empty((popRanked.shape[0], 4))
+    select[:, 0:2] = popRanked
+    select[:, 2] = np.cumsum(select[:, 1])
+    select[:, 3] = np.cumsum(select[:, 1]) / np.sum(select[:, 1])
     for i in range(0, eliteSize):
-        selectionResults.append(popRanked[i][0])
-    for i in range(0, len(popRanked) - eliteSize):
-        pick = 100 * random.random()
-        for i in range(0, len(popRanked)):
-            if pick <= df.iat[i, 3]:
-                selectionResults.append(popRanked[i][0])
+        selectionResults[i] = popRanked[i, 0]
+    for i in range(eliteSize, popRanked.shape[0]):
+        pick = random.random()
+        for j in range(0, popRanked.shape[0]):
+            if pick <= select[j, 3]:
+                selectionResults[i] = popRanked[i, 0]
                 break
     return selectionResults
 
 
+@jit(nopython=True)
 def matingPool(population, selectionResults):
-    matingpool = []
-    for i in range(0, len(selectionResults)):
+    matingpool = np.empty(population.shape, dtype=np.int8)
+    for i in range(0, selectionResults.shape[0]):
         index = selectionResults[i]
-        matingpool.append(population[index])
+        matingpool[i] = population[index]
     return matingpool
 
-@jit(nopython=True)
-def breed(parent1, parent2):
-    child = []
-    childP1 = []
-    childP2 = []
 
-    geneA = int(random.random() * len(parent1))
-    geneB = int(random.random() * len(parent1))
+# @jit(nopython=True)
+def breed(parent1, parent2):
+    childP1 = np.zeros(parent1.shape, dtype=np.int8)
+    childP1.fill(-1)
+    geneA = random.randint(0, parent1.shape[0]-1)
+    geneB = geneA
+    while geneB == geneA:
+        geneB = random.randint(0, parent1.shape[0]-1)
 
     startGene = min(geneA, geneB)
     endGene = max(geneA, geneB)
-
     for i in range(startGene, endGene):
-        childP1.append(parent1[i])
+        childP1[i] = parent1[i]
 
-    childP2 = [item for item in parent2 if item not in childP1]
+    # childP2 = np.zeros((parent2.shape[0]-(endGene-startGene),), dtype=np.int8)
+    # x = 0
+    # for i in range(parent2.shape[0]):
+    #     if childP1[i]
 
-    child = childP1 + childP2
-    return child
+    # mask = np.in1d(parent2, childP1)
+    # childP2 = childP1[-mask]
+    childP2 = np.setdiff1d(parent2, childP1)
+    if startGene != 0:
+        childP1[:startGene] = childP2[:startGene]
+    if endGene != 0:
+        childP1[endGene:] = childP2[startGene:]
+
+    # TODO REMOVE IF OK
+    test = np.zeros(parent1.shape, dtype=np.int8)
+    test.fill(-1)
+
+    if childP1.all() == test.all():
+        print("here")
+
+    return childP1
 
 
+# @jit(nopython=True)
 def breedPopulation(matingpool, eliteSize):
-    children = []
-    length = len(matingpool) - eliteSize
-    pool = random.sample(matingpool, len(matingpool))
-
+    children = np.empty(matingpool.shape, dtype=np.int8)
     for i in range(0, eliteSize):
-        children.append(matingpool[i])
-
-    for i in range(0, length):
-        child = breed(pool[i], pool[len(matingpool) - i - 1])
-        children.append(child)
+        children[i] = matingpool[i]
+    np.random.shuffle(matingpool)
+    for i in range(eliteSize, matingpool.shape[0]):
+        child = breed(matingpool[i], matingpool[matingpool.shape[0] - i - 1])
+        children[i] = child
     return children
 
 
+@jit(nopython=True)
 def mutate(individual, mutationRate):
-    for swapped in range(len(individual)):
-        if (random.random() < mutationRate):
-            swapWith = int(random.random() * len(individual))
-
+    for swapped in range(individual.shape[0]):
+        if random.random() < mutationRate:
+            swapWith = random.randint(0, individual.shape[0]-1)
             city1 = individual[swapped]
             city2 = individual[swapWith]
-
             individual[swapped] = city2
             individual[swapWith] = city1
     return individual
 
 
+@jit(nopython=True)
 def mutatePopulation(population, mutationRate):
-    mutatedPop = []
-
-    for ind in range(0, len(population)):
-        mutatedInd = mutate(population[ind], mutationRate)
-        mutatedPop.append(mutatedInd)
+    mutatedPop = np.empty(population.shape, dtype=np.int8)
+    for i in range(population.shape[0]):
+        mutatedInd = mutate(population[i], mutationRate)
+        mutatedPop[i] = mutatedInd
     return mutatedPop
 
 
+# @jit(nopython=True)
 def nextGeneration(currentGen, eliteSize, mutationRate):
     popRanked = rankRoutes(currentGen)
-    selectionResults = selection(popRanked, eliteSize)  # todo here: check how seelction works
+    selectionResults = selection(popRanked, eliteSize)
     matingpool = matingPool(currentGen, selectionResults)
     children = breedPopulation(matingpool, eliteSize)
     nextGeneration = mutatePopulation(children, mutationRate)
     return nextGeneration
 
 
-def geneticAlgorithm(population, popSize, eliteSize, mutationRate, generations):
+def geneticAlgorithm(population, distances, popSize, eliteSize, mutationRate, generations):
     pop = initialPopulation(popSize, population)  # ongoing
     print("Initial distance: " + str(rankRoutes(pop)[0][1]))
-
     for i in range(0, generations):
         pop = nextGeneration(pop, eliteSize, mutationRate)
-
     print("Final distance: " + str(rankRoutes(pop)[0][1]))
     bestRouteIndex = rankRoutes(pop)[0][0]
     bestRoute = pop[bestRouteIndex]
@@ -226,4 +201,4 @@ optimal_fitness = 9352
 dist_matrix, nb_cities, cities_coord = read_tsplib_file('./dj38.tsp')
 cityList = cities_coord.index.values
 
-geneticAlgorithm(population=cityList, popSize=100, eliteSize=20, mutationRate=0.01, generations=50)
+geneticAlgorithm(population=cityList, distances=dist_matrix, popSize=100, eliteSize=20, mutationRate=0.02, generations=5000)
