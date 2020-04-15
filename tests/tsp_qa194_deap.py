@@ -42,7 +42,7 @@ def read_tsplib_file(filename):
         return matrix, dimension, cities
 
 
-def evalTSP(individual):
+def evalTSP(individual, dist_mat):
     distance = dist_matrix[individual[-1]][individual[0]]
     for gene1, gene2 in zip(individual[0:-1], individual[1:]):
         distance += dist_matrix[gene1][gene2]
@@ -91,7 +91,7 @@ def create_toolbox(num_cities, ind_mutpb, tourn_size):
     tb.register("mate", tools.cxOrdered)
     tb.register("mutate", tools.mutShuffleIndexes, indpb=ind_mutpb)
     tb.register("select", tools.selTournament, tournsize=tourn_size)
-    tb.register("evaluate", evalTSP)
+    tb.register("evaluate", evalTSP, dist_mat=dist_matrix)
     return tb
 
 
