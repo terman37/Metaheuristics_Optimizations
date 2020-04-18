@@ -40,7 +40,7 @@ Comparison results in table below for Djibouti
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | [notebook](1-tsp_dj38/tsp_dj38_jmetalpy.ipynb)               | notebook                                                     | notebook                                                     |
 | <img src="1-tsp_dj38/dj38-jmetalpy.png" alt="dj38-jmetalpy" style="zoom:50%;" /> | <img src="1-tsp_dj38/dj38-deap.png" alt="dj38-deap" style="zoom:50%;" /> | <img src="1-tsp_dj38/dj38-kmean-deap.png" alt="dj38-kmean-deap" style="zoom:50%;" /> |
-|                                                              |                                                              |                                                              |
+| <img src="1-tsp_dj38/dj38-jmetalpy_tour.png" alt="dj38-jmetalpy_tour" style="zoom:50%;" /> | <img src="1-tsp_dj38/dj38-deap-tour.png" alt="dj38-deap-tour" style="zoom:50%;" /> | <img src="1-tsp_dj38/dj38-kmean-deap_tour.png" alt="dj38-kmean-deap_tour" style="zoom:50%;" /> |
 
 
 
