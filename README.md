@@ -60,5 +60,22 @@ National Traveling salesman problems from [math.uwaterloo.ca](http://www.math.uw
 | <img src="2-tsp_qa194/qa194-jmetalpy.png" alt="qa194-jmetalpy" style="zoom:50%;" /> | <img src="2-tsp_qa194/qa194-deap.png" alt="qa194-deap" style="zoom:50%;" /> | <img src="2-tsp_qa194/qa194-kmean-deap.png" alt="qa194-kmean-deap" style="zoom:50%;" /> |
 | <img src="2-tsp_qa194/qa194-jmetalpy-tour.png" alt="qa194-jmetalpy-tour" style="zoom:50%;" /> | <img src="2-tsp_qa194/qa194-deap-tour.png" alt="qa194-deap-tour" style="zoom:50%;" /> | <img src="2-tsp_qa194/qa194-kmean-deap-tour.png" alt="qa194-kmean-deap-tour" style="zoom:50%;" /> |
 
+## Continuous Optimization:
 
+Target is to optimize benchmark functions (F1 to F6) from CEC2008: description [here](assignment/CEC2008_TechnicalReport.pdf)
+
+Optimization done in dimension 50 and 500.
+
+#### Note on the use CEC functions and data: 
+
+Data and functions code have been provided in C. In order to use it easily with Python, I extracted data to csv file using this [notebook](0-datah_to_csv.ipynb), and recoded the function evaluation in python. To speed up the execution of the code, I used the Numba library which basically recompile the functions at execution time, making execution much faster. 
+
+### F1: Shifted Sphere  
+
+Simple function, using a BFGS algorithm (Quasi Newton family) can solve it fast: less than 1 sec in dimension 500.
+
+| Dimension 50                                                 | Dimension 500                                                |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [notebook](3-shifted-Sphere/shifted_sphere_d50.ipynb)        | [notebook](3-shifted-Sphere/shifted_sphere_d500.ipynb)       |
+| <img src="3-shifted-Sphere/F1-D50.png" alt="F1-D50" style="zoom:50%;" /> | <img src="3-shifted-Sphere/F1-D500.png" alt="F1-D500" style="zoom:50%;" /> |
 
