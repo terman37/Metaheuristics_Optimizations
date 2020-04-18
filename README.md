@@ -34,19 +34,23 @@ National Traveling salesman problems from [math.uwaterloo.ca](http://www.math.uw
   - link clusters together by disconnecting one edge of the cluster and linking it to next one randomly to create initial population
   - run a GA on this new suboptimal population.
 
-Comparison results in table below for Djibouti
+### Comparison results in table below for Djibouti:
 
 | jmetalpy                                                     | DEAP                                                         | Kmean + DEAP                                                 |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| [notebook](1-tsp_dj38/tsp_dj38_jmetalpy.ipynb)               | notebook                                                     | notebook                                                     |
+| [notebook](1-tsp_dj38/tsp_dj38_jmetalpy.ipynb)               | [notebook](1-tsp_dj38/tsp_dj38_deap.ipynb)                   | [notebook](1-tsp_dj38/tsp_dj38_deap_kmeans_init.ipynb)       |
 | <img src="1-tsp_dj38/dj38-jmetalpy.png" alt="dj38-jmetalpy" style="zoom:50%;" /> | <img src="1-tsp_dj38/dj38-deap.png" alt="dj38-deap" style="zoom:50%;" /> | <img src="1-tsp_dj38/dj38-kmean-deap.png" alt="dj38-kmean-deap" style="zoom:50%;" /> |
 | <img src="1-tsp_dj38/dj38-jmetalpy_tour.png" alt="dj38-jmetalpy_tour" style="zoom:50%;" /> | <img src="1-tsp_dj38/dj38-deap-tour.png" alt="dj38-deap-tour" style="zoom:50%;" /> | <img src="1-tsp_dj38/dj38-kmean-deap_tour.png" alt="dj38-kmean-deap_tour" style="zoom:50%;" /> |
 
 
 
+### Comparison results in table below for Qatar:
 
-
-
+| jmetalpy                                                     | DEAP                                                         | Kmean + DEAP                                                 |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [notebook](2-tsp_qa194/tsp_qa194_jmetalpy.ipynb)             | [notebook](2-tsp_qa194/tsp_qa194_deap.ipynb)                 | [notebook](2-tsp_qa194/tsp_qa194_deap_kmeans_init.ipynb)     |
+| <img src="2-tsp_qa194/qa194-jmetalpy.png" alt="qa194-jmetalpy" style="zoom:50%;" /> | <img src="2-tsp_qa194/qa194-deap.png" alt="qa194-deap" style="zoom:50%;" /> | <img src="2-tsp_qa194/qa194-kmean-deap.png" alt="qa194-kmean-deap" style="zoom:50%;" /> |
+| <img src="2-tsp_qa194/qa194-jmetalpy-tour.png" alt="qa194-jmetalpy-tour" style="zoom:50%;" /> | <img src="2-tsp_qa194/qa194-deap-tour.png" alt="qa194-deap-tour" style="zoom:50%;" /> | <img src="2-tsp_qa194/qa194-kmean-deap-tour.png" alt="qa194-kmean-deap-tour" style="zoom:50%;" /> |
 
 
 
