@@ -29,9 +29,17 @@ National Traveling salesman problems from [math.uwaterloo.ca](http://www.math.uw
   I found some interesting reading on how to initialize population [here](https://www.researchgate.net/publication/283031756_An_Improved_Genetic_Algorithm_with_Initial_Population_Strategy_for_Symmetric_TSP): the idea is to:
 
   - create clusters of cities using simple k-means
+
   - find the optimal path between clusters (using GA)
+
   - for each cluster find optimal path (using GA)
+
+    example Djibouti:
+
+    <img src="1-tsp_dj38/dj38-clusters.png" alt="dj38-clusters" style="zoom:50%;" />
+
   - link clusters together by disconnecting one edge of the cluster and linking it to next one randomly to create initial population
+
   - run a GA on this new suboptimal population.
 
 ### Comparison results in table below for Djibouti:
