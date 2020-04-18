@@ -1,4 +1,4 @@
-# Metaheuristics Assignment
+# Metaheuristics optimizations:
 
 ## Discrete Optimization:
 
@@ -54,30 +54,3 @@ National Traveling salesman problems from [math.uwaterloo.ca](http://www.math.uw
 
 
 
-The chosen algorithm and a justification of this choice
-\- The parameters of the algorithm
-\- The final results, both solution and fitness
-\- The number of function evaluations
-\- The stopping criterion
-\- The computational time
-\- The convergence curve (fitness as a function of time)  
-
-
-
-
-
-conda install ipykernel
-
-conda install matplotlib
-
-conda install pandas
-
-conda install scipy
-
-conda install numba
-
-
-
-pip install jmetalpy
-
-conda install -c conda-forge pygmo
