@@ -79,3 +79,72 @@ Simple function, using a BFGS algorithm (Quasi Newton family) can solve it fast:
 | [notebook](3-shifted-Sphere/shifted_sphere_d50.ipynb)        | [notebook](3-shifted-Sphere/shifted_sphere_d500.ipynb)       |
 | <img src="3-shifted-Sphere/F1-D50.png" alt="F1-D50" style="zoom:50%;" /> | <img src="3-shifted-Sphere/F1-D500.png" alt="F1-D500" style="zoom:50%;" /> |
 
+### F2: Schwefel problem 2.21
+
+#### D50:
+
+I used an auto apdatative differential evolution algorithm to solve this one
+
+[notebook](4-Schwefel-Problem-2_21/schwefel_problem_221_d50.ipynb)
+
+<img src="/home/terman37/Documents/MyGit/Metaheuristics_Assignment/4-Schwefel-Problem-2_21/d50.png" alt="d50" style="zoom:50%;" />
+
+#### D500:
+
+
+
+
+
+### F3: Shifted Rosenbrock
+
+#### D50:
+
+[notebook](5-shifted-Rosenbrock/shifted_rosenbrock_d50.ipynb)
+
+<img src="/home/terman37/Documents/MyGit/Metaheuristics_Assignment/5-shifted-Rosenbrock/d50.png" alt="d50" style="zoom:50%;" />
+
+#### D500:
+
+
+
+
+
+### F4: Shifted Rastrigin
+
+#### D50:
+
+[notebook](6-shifted-Rastrigin/shifted_rastrigin_d50.ipynb)
+
+<img src="/home/terman37/Documents/MyGit/Metaheuristics_Assignment/6-shifted-Rastrigin/d50.png" alt="d50" style="zoom:50%;" />
+
+#### D500:
+
+
+
+
+
+### F6: Shifted Griewank
+
+#### D50:
+
+[notebook](6-shifted-Griewank/shifted_griewank_d50.ipynb)
+
+<img src="/home/terman37/Documents/MyGit/Metaheuristics_Assignment/7-shifted-Griewank/d50.png" alt="d50" style="zoom:50%;" />
+
+#### D500:
+
+
+
+
+
+### F6: Shifted Ackley
+
+#### D50:
+
+[notebook](6-shifted-Ackley/shifted_ackley_d50.ipynb)
+
+<img src="/home/terman37/Documents/MyGit/Metaheuristics_Assignment/8-shifted-Ackley/d50.png" alt="d50" style="zoom:50%;" />
+
+
+
+#### D500:
