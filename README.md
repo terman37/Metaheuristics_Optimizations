@@ -87,7 +87,7 @@ I used an auto apdatative differential evolution algorithm to solve this one
 
 [notebook](4-Schwefel-Problem-2_21/schwefel_problem_221_d50.ipynb)
 
-<img src="/home/terman37/Documents/MyGit/Metaheuristics_Assignment/4-Schwefel-Problem-2_21/d50.png" alt="d50" style="zoom:50%;" />
+<img src="4-Schwefel-Problem-2_21/d50.png" alt="d50" style="zoom:50%;" />
 
 #### D500:
 
@@ -101,7 +101,7 @@ I used an auto apdatative differential evolution algorithm to solve this one
 
 [notebook](5-shifted-Rosenbrock/shifted_rosenbrock_d50.ipynb)
 
-<img src="/home/terman37/Documents/MyGit/Metaheuristics_Assignment/5-shifted-Rosenbrock/d50.png" alt="d50" style="zoom:50%;" />
+<img src="5-shifted-Rosenbrock/d50.png" alt="d50" style="zoom:50%;" />
 
 #### D500:
 
@@ -115,7 +115,7 @@ I used an auto apdatative differential evolution algorithm to solve this one
 
 [notebook](6-shifted-Rastrigin/shifted_rastrigin_d50.ipynb)
 
-<img src="/home/terman37/Documents/MyGit/Metaheuristics_Assignment/6-shifted-Rastrigin/d50.png" alt="d50" style="zoom:50%;" />
+<img src="6-shifted-Rastrigin/d50.png" alt="d50" style="zoom:50%;" />
 
 #### D500:
 
@@ -129,7 +129,7 @@ I used an auto apdatative differential evolution algorithm to solve this one
 
 [notebook](6-shifted-Griewank/shifted_griewank_d50.ipynb)
 
-<img src="/home/terman37/Documents/MyGit/Metaheuristics_Assignment/7-shifted-Griewank/d50.png" alt="d50" style="zoom:50%;" />
+<img src="7-shifted-Griewank/d50.png" alt="d50" style="zoom:50%;" />
 
 #### D500:
 
@@ -143,7 +143,7 @@ I used an auto apdatative differential evolution algorithm to solve this one
 
 [notebook](6-shifted-Ackley/shifted_ackley_d50.ipynb)
 
-<img src="/home/terman37/Documents/MyGit/Metaheuristics_Assignment/8-shifted-Ackley/d50.png" alt="d50" style="zoom:50%;" />
+<img src="8-shifted-Ackley/d50.png" alt="d50" style="zoom:50%;" />
 
 
 
