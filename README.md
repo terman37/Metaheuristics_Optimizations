@@ -83,8 +83,6 @@ Simple function, using a BFGS algorithm (Quasi Newton family) can solve it fast:
 
 #### D50:
 
-I used an auto apdatative differential evolution algorithm to solve this one
-
 [notebook](4-Schwefel-Problem-2_21/schwefel_problem_221_d50.ipynb)
 
 <img src="4-Schwefel-Problem-2_21/d50.png" alt="d50" style="zoom:50%;" />
