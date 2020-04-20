@@ -1,6 +1,0 @@
-2020-03-16 18:24:11,780 [MainThread  ] [INFO ]  Output file (function values): FUN.Simulated Annealing.MyRosen
-2020-03-16 18:24:11,781 [MainThread  ] [INFO ]  Output file (variables): VAR.Simulated Annealing.MyRosen
-2020-03-16 18:30:55,149 [MainThread  ] [INFO ]  Output file (function values): FUN.Simulated Annealing.MyRosen
-2020-03-16 18:30:55,149 [MainThread  ] [INFO ]  Output file (variables): VAR.Simulated Annealing.MyRosen
-2020-03-20 18:01:13,189 [MainThread  ] [INFO ]  Output file (function values): FUN.Simulated Annealing.Shifted RosenBrock
-2020-03-20 18:01:13,757 [MainThread  ] [INFO ]  Output file (variables): VAR.Simulated Annealing.Shifted RosenBrock

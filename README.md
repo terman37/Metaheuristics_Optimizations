@@ -77,7 +77,7 @@ Simple function, using a BFGS algorithm (Quasi Newton family) can solve it fast:
 | Dimension 50                                                 | Dimension 500                                                |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | [notebook](3-shifted-Sphere/shifted_sphere_d50.ipynb)        | [notebook](3-shifted-Sphere/shifted_sphere_d500.ipynb)       |
-| <img src="3-shifted-Sphere/F1-D50.png" alt="F1-D50" style="zoom:50%;" /> | <img src="3-shifted-Sphere/F1-D500.png" alt="F1-D500" style="zoom:50%;" /> |
+| <img src="3-shifted-Sphere/d50.png" alt="F1-D50" style="zoom:50%;" /> | <img src="3-shifted-Sphere/d500.png" alt="F1-D500" style="zoom:50%;" /> |
 
 ### F2: Schwefel problem 2.21
 
@@ -146,3 +146,7 @@ Simple function, using a BFGS algorithm (Quasi Newton family) can solve it fast:
 
 
 #### D500:
+
+[notebook](6-shifted-Ackley/shifted_ackley_d500.ipynb)
+
+<img src="8-shifted-Ackley/d500.png" alt="d500" style="zoom:50%;" />
