@@ -117,9 +117,9 @@ Simple function, using a BFGS algorithm (Quasi Newton family) can solve it fast:
 
 #### D500:
 
+[notebook](6-shifted-Rastrigin/shifted_rastrigin_d500.ipynb)
 
-
-
+<img src="6-shifted-Rastrigin/d500.png" alt="d500" style="zoom:50%;" />
 
 ### F6: Shifted Griewank
 
@@ -131,9 +131,9 @@ Simple function, using a BFGS algorithm (Quasi Newton family) can solve it fast:
 
 #### D500:
 
+[notebook](6-shifted-Griewank/shifted_griewank_d500.ipynb)
 
-
-
+<img src="7-shifted-Griewank/d500.png" alt="d500" style="zoom:50%;" />
 
 ### F6: Shifted Ackley
 
