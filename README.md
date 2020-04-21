@@ -70,6 +70,8 @@ Optimization done in dimension 50 and 500.
 
 Data and functions code have been provided in C. In order to use it easily with Python, I extracted data to csv file using this [notebook](0-datah_to_csv.ipynb), and recoded the function evaluation in python. To speed up the execution of the code, I used the Numba library which basically recompile the functions at execution time, making execution much faster. 
 
+
+
 ### F1: Shifted Sphere  
 
 Simple function, using a BFGS algorithm (Quasi Newton family) can solve it fast: less than 1 sec in dimension 500.
@@ -79,9 +81,9 @@ Simple function, using a BFGS algorithm (Quasi Newton family) can solve it fast:
 | [notebook](3-shifted-Sphere/shifted_sphere_d50.ipynb)        | [notebook](3-shifted-Sphere/shifted_sphere_d500.ipynb)       |
 | <img src="3-shifted-Sphere/d50.png" alt="F1-D50" style="zoom:50%;" /> | <img src="3-shifted-Sphere/d500.png" alt="F1-D500" style="zoom:50%;" /> |
 
+
+
 ### F2: Schwefel problem 2.21
-
-
 
 | Dimension 50                                                 | Dimension 500                                                |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
