@@ -129,7 +129,7 @@ def solve_pb(dim, my_algo, bounds, optim, popsize, pop=None):
     elif my_algo.get_name().split(":")[0] == "SA":
         extract_algo = my_algo.extract(pg.simulated_annealing)
 
-    log = extract_algo.get_log()-funcbias
+    log = extract_algo.get_log()
     curve = [x[2] for x in log]
     niter = log[-1][0]
 
@@ -171,17 +171,17 @@ funcval, funcbias, search_space = read_values(func_name)
 
 DIM = 500
 
-gen = 10000
+gen = 5000
 pop_size = 100
 
 algo = pg.algorithm(pg.pso(gen=gen,
                            omega=0.75,
-                           eta1=2,
+                           eta1=1.5,
                            eta2=2,
-                           max_vel=0.5,
+                           max_vel=0.9,
                            variant=1,
                            neighb_type=3,
-                           neighb_param=4,
+                           neighb_param=10,
                            memory=False,
                            seed=37))
 
@@ -211,16 +211,16 @@ algo = pg.algorithm(pg.pso(gen=gen,
 #                                            start_range=1.0,
 #                                            seed=37))
 
-algo = pg.algorithm(pg.sga(gen=gen,
-                           cr=0.85,
-                           eta_c=10.0, # distribution index for sbx crossover
-                           m=0.01,
-                           param_m=5, # distribution index (polynomial mutation), gaussian width (gaussian mutation) or inactive (uniform mutation)
-                           param_s=1, # the number of best individuals to use in “truncated” selection or the size of the tournament in tournament selection.
-                           crossover='sbx', # One of exponential, binomial, single or sbx
-                           mutation='polynomial', # One of gaussian, polynomial or uniform
-                           selection='truncated', # One of tournament, truncated.
-                           seed=37))
+# algo = pg.algorithm(pg.sga(gen=gen,
+#                            cr=0.85,
+#                            eta_c=1.0, # distribution index for sbx crossover
+#                            m=0.01,
+#                            param_m=5, # distribution index (polynomial mutation), gaussian width (gaussian mutation) or inactive (uniform mutation)
+#                            param_s=10, # the number of best individuals to use in “truncated” selection or the size of the tournament in tournament selection.
+#                            crossover='sbx', # One of exponential, binomial, single or sbx
+#                            mutation='polynomial', # One of gaussian, polynomial or uniform
+#                            selection='truncated', # One of tournament, truncated.
+#                            seed=37))
 
 
 
@@ -231,28 +231,28 @@ pop_evolv, logs, nit, compute_time = solve_pb(dim=DIM,
                                               popsize=pop_size)
 
 
-gen = 10000
-pop_size = 100
-algo = pg.algorithm(pg.pso(gen=gen,
-                           omega=0.7,
-                           eta1=1.5,
-                           eta2=2,
-                           max_vel=0.5,
-                           variant=6,
-                           neighb_type=3,
-                           neighb_param=4,
-                           memory=False,
-                           seed=37))
-algo = pg.algorithm(pg.de1220(gen=gen))
-
-
-
-pop_evolv, logs, nit, compute_time = solve_pb(dim=DIM,
-                                              my_algo=algo,
-                                              bounds=search_space,
-                                              optim=funcbias,
-                                              popsize=pop_size,
-                                              pop=pop_evolv)
+# gen = 10000
+# pop_size = 100
+# algo = pg.algorithm(pg.pso(gen=gen,
+#                            omega=0.7,
+#                            eta1=1.5,
+#                            eta2=2,
+#                            max_vel=0.5,
+#                            variant=6,
+#                            neighb_type=3,
+#                            neighb_param=4,
+#                            memory=False,
+#                            seed=37))
+# algo = pg.algorithm(pg.de1220(gen=gen))
+#
+#
+#
+# pop_evolv, logs, nit, compute_time = solve_pb(dim=DIM,
+#                                               my_algo=algo,
+#                                               bounds=search_space,
+#                                               optim=funcbias,
+#                                               popsize=pop_size,
+#                                               pop=pop_evolv)
 
 print_solution(dimension=DIM,
                my_algo=algo,
