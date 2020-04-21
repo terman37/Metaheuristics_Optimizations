@@ -171,43 +171,9 @@ funcval, funcbias, search_space = read_values(func_name)
 
 DIM = 500
 
-# gen=500
-# pop_size = 100
-#
-# test_algo = []
-# # test_algo.append(pg.cmaes(gen=gen))
-# test_algo.append(pg.pso(gen=gen))
-# test_algo.append(pg.pso_gen(gen=gen))
-# test_algo.append(pg.de(gen=gen))
-# test_algo.append(pg.sade(gen=gen))
-# test_algo.append(pg.de1220(gen=gen))
-# test_algo.append(pg.sga(gen=gen))
-# test_algo.append(pg.bee_colony(gen=gen))
-#
-# popsizes = [100,250]
-# gens = [5000,10000]
-#
-# for pop_size in popsizes:
-#     print("pop: %d" % pop_size)
-#     for gen in gens:
-#         print("\tgen: %d" % gen)
-#         for test in test_algo:
-#             algo = pg.algorithm(test)
-#             t1 = time.time()
-#             pop_evolv, logs, nit, compute_time = solve_pb(dim=DIM,
-#                                                       my_algo=algo,
-#                                                       bounds=search_space,
-#                                                       optim=funcbias,
-#                                                       popsize=pop_size
-#                                                      )
-#             t2=time.time()
-#             fitness = pop_evolv.champion_f[0]-funcbias
-#             print("\t\t%s" % algo.get_name())
-#             print("\t\tfitness: %.1f" % fitness)
-#             print("\t\ttime: %.1f" % (t2-t1))
+gen = 10000
+pop_size = 100
 
-
-gen = 25000
 algo = pg.algorithm(pg.pso(gen=gen,
                            omega=0.75,
                            eta1=2,
@@ -256,8 +222,7 @@ algo = pg.algorithm(pg.sga(gen=gen,
                            selection='truncated', # One of tournament, truncated.
                            seed=37))
 
-print(algo.get_name())
-pop_size = 100
+
 
 pop_evolv, logs, nit, compute_time = solve_pb(dim=DIM, 
                                               my_algo=algo, 
@@ -266,24 +231,28 @@ pop_evolv, logs, nit, compute_time = solve_pb(dim=DIM,
                                               popsize=pop_size)
 
 
-# algo = pg.algorithm(pg.pso(gen=gen,
-#                            omega=0.7,
-#                            eta1=1.5,
-#                            eta2=2,
-#                            max_vel=0.5,
-#                            variant=6,
-#                            neighb_type=3,
-#                            neighb_param=4,
-#                            memory=False,
-#                            seed=37))
+gen = 10000
+pop_size = 100
+algo = pg.algorithm(pg.pso(gen=gen,
+                           omega=0.7,
+                           eta1=1.5,
+                           eta2=2,
+                           max_vel=0.5,
+                           variant=6,
+                           neighb_type=3,
+                           neighb_param=4,
+                           memory=False,
+                           seed=37))
+algo = pg.algorithm(pg.de1220(gen=gen))
 
 
-# pop_evolv, logs, nit, compute_time = solve_pb(dim=DIM,
-#                                               my_algo=algo,
-#                                               bounds=search_space,
-#                                               optim=funcbias,
-#                                               popsize=pop_size,
-#                                               pop=pop_evolv)
+
+pop_evolv, logs, nit, compute_time = solve_pb(dim=DIM,
+                                              my_algo=algo,
+                                              bounds=search_space,
+                                              optim=funcbias,
+                                              popsize=pop_size,
+                                              pop=pop_evolv)
 
 print_solution(dimension=DIM,
                my_algo=algo,

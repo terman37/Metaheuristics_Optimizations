@@ -81,72 +81,48 @@ Simple function, using a BFGS algorithm (Quasi Newton family) can solve it fast:
 
 ### F2: Schwefel problem 2.21
 
-#### D50:
-
-[notebook](4-Schwefel-Problem-2_21/schwefel_problem_221_d50.ipynb)
-
-<img src="4-Schwefel-Problem-2_21/d50.png" alt="d50" style="zoom:50%;" />
-
-#### D500:
 
 
+| Dimension 50                                                 | Dimension 500                                                |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [notebook](4-Schwefel-Problem-2_21/schwefel_problem_221_d50.ipynb) | [notebook](4-Schwefel-Problem-2_21/schwefel_problem_221_d500.ipynb) |
+| <img src="4-Schwefel-Problem-2_21/d50.png" alt="d50" style="zoom:50%;" /> |                                                              |
 
 
 
 ### F3: Shifted Rosenbrock
 
-#### D50:
-
-[notebook](5-shifted-Rosenbrock/shifted_rosenbrock_d50.ipynb)
-
-<img src="5-shifted-Rosenbrock/d50.png" alt="d50" style="zoom:50%;" />
-
-#### D500:
-
-
+| Dimension 50                                                 | Dimension 500                                                |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [notebook](5-shifted-Rosenbrock/shifted_rosenbrock_d50.ipynb) | [notebook](5-shifted-Rosenbrock/shifted_rosenbrock_d500.ipynb) |
+| <img src="5-shifted-Rosenbrock/d50.png" alt="d50" style="zoom:50%;" /> |                                                              |
 
 
 
 ### F4: Shifted Rastrigin
 
-#### D50:
+| Dimension 50                                                 | Dimension 500                                                |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [notebook](6-shifted-Rastrigin/shifted_rastrigin_d50.ipynb)  | [notebook](6-shifted-Rastrigin/shifted_rastrigin_d500.ipynb) |
+| <img src="6-shifted-Rastrigin/d50.png" alt="d50" style="zoom:50%;" /> | <img src="6-shifted-Rastrigin/d500.png" alt="d500" style="zoom:50%;" /> |
 
-[notebook](6-shifted-Rastrigin/shifted_rastrigin_d50.ipynb)
 
-<img src="6-shifted-Rastrigin/d50.png" alt="d50" style="zoom:50%;" />
-
-#### D500:
-
-[notebook](6-shifted-Rastrigin/shifted_rastrigin_d500.ipynb)
-
-<img src="6-shifted-Rastrigin/d500.png" alt="d500" style="zoom:50%;" />
 
 ### F6: Shifted Griewank
 
-#### D50:
+| Dimension 50                                                 | Dimension 500                                                |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [notebook](6-shifted-Griewank/shifted_griewank_d50.ipynb)    | [notebook](6-shifted-Griewank/shifted_griewank_d500.ipynb)   |
+| <img src="7-shifted-Griewank/d50.png" alt="d50" style="zoom:50%;" /> | <img src="7-shifted-Griewank/d500.png" alt="d500" style="zoom:50%;" /> |
 
-[notebook](6-shifted-Griewank/shifted_griewank_d50.ipynb)
 
-<img src="7-shifted-Griewank/d50.png" alt="d50" style="zoom:50%;" />
-
-#### D500:
-
-[notebook](6-shifted-Griewank/shifted_griewank_d500.ipynb)
-
-<img src="7-shifted-Griewank/d500.png" alt="d500" style="zoom:50%;" />
 
 ### F6: Shifted Ackley
 
-#### D50:
-
-[notebook](6-shifted-Ackley/shifted_ackley_d50.ipynb)
-
-<img src="8-shifted-Ackley/d50.png" alt="d50" style="zoom:50%;" />
-
+| Dimension 50                                                 | Dimension 500                                                |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [notebook](6-shifted-Ackley/shifted_ackley_d50.ipynb)        | [notebook](6-shifted-Ackley/shifted_ackley_d500.ipynb)       |
+| <img src="8-shifted-Ackley/d50.png" alt="d50" style="zoom:50%;" /> | <img src="8-shifted-Ackley/d500.png" alt="d500" style="zoom:50%;" /> |
 
 
-#### D500:
 
-[notebook](6-shifted-Ackley/shifted_ackley_d500.ipynb)
-
-<img src="8-shifted-Ackley/d500.png" alt="d500" style="zoom:50%;" />
