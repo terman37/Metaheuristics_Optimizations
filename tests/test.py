@@ -126,8 +126,8 @@ def solve_pb(dim, my_algo, bounds, optim, popsize, pop=None):
         extract_algo = my_algo.extract(pg.bee_colony)
     elif my_algo.get_name().split(":")[0] == "xNES":
         extract_algo = my_algo.extract(pg.bee_colony)
-    elif my_algo.get_name().split(":")[0] == "CMAES":
-        extract_algo = my_algo.extract(pg.cmaes)
+    elif my_algo.get_name().split(":")[0] == "SA":
+        extract_algo = my_algo.extract(pg.simulated_annealing)
 
     log = extract_algo.get_log()-funcbias
     curve = [x[2] for x in log]
@@ -166,7 +166,7 @@ def print_solution(dimension, my_algo, pop_evolved, log, niter, duration):
     plt.show()
 
 # function to choose: sphere, schwefel, rosenbrock, rastrigin, griewank, ackley
-func_name = 'rosenbrock'
+func_name = 'schwefel'
 funcval, funcbias, search_space = read_values(func_name)
 
 DIM = 500
@@ -207,36 +207,56 @@ DIM = 500
 #             print("\t\ttime: %.1f" % (t2-t1))
 
 
-gen = 10000
+gen = 25000
 algo = pg.algorithm(pg.pso(gen=gen,
-                           omega=0.65,
-                           eta1=1.5,
+                           omega=0.75,
+                           eta1=2,
                            eta2=2,
-                           max_vel=0.7,
-                           variant=5,
+                           max_vel=0.5,
+                           variant=1,
                            neighb_type=3,
-                           neighb_param=10,
+                           neighb_param=4,
                            memory=False,
                            seed=37))
 
-algo = pg.algorithm(pg.sade(gen=gen,
-                            variant=6,
-                            variant_adptv=1,
-                            ftol=1e-03,
-                            xtol=1e-03,
-                            memory=True,
-                            seed=37))
+# algo = pg.algorithm(pg.sade(gen=gen,
+#                             variant=6,
+#                             variant_adptv=1,
+#                             ftol=1e-03,
+#                             xtol=1e-03,
+#                             memory=True,
+#                             seed=37))
 #
-algo = pg.algorithm(pg.de1220(gen=gen,
-                              allowed_variants=[2, 3, 7, 10, 13, 14, 15, 16,1,4,5,8,9,11,12,17,18],
-                              variant_adptv=1,
-                              ftol=1e-03,
-                              xtol=1e-03,
-                              memory=False,
-                              seed=37))
+# algo = pg.algorithm(pg.de1220(gen=gen,
+#                               allowed_variants=[2, 3, 7, 10, 13, 14, 15, 16,1,4,5,6,8,9,11,12,17,18],
+#                               variant_adptv=1,
+#                               ftol=1e-03,
+#                               xtol=1e-03,
+#                               memory=False,
+#                               seed=37))
 
 # algo = pg.algorithm(pg.bee_colony(gen=gen))
 
+# algo = pg.algorithm(pg.simulated_annealing(Ts=10.0,
+#                                            Tf=0.001,
+#                                            n_T_adj=100,
+#                                            n_range_adj=10,
+#                                            bin_size=20,
+#                                            start_range=1.0,
+#                                            seed=37))
+
+algo = pg.algorithm(pg.sga(gen=gen,
+                           cr=0.85,
+                           eta_c=10.0, # distribution index for sbx crossover
+                           m=0.01,
+                           param_m=5, # distribution index (polynomial mutation), gaussian width (gaussian mutation) or inactive (uniform mutation)
+                           param_s=1, # the number of best individuals to use in “truncated” selection or the size of the tournament in tournament selection.
+                           crossover='sbx', # One of exponential, binomial, single or sbx
+                           mutation='polynomial', # One of gaussian, polynomial or uniform
+                           selection='truncated', # One of tournament, truncated.
+                           seed=37))
+
+print(algo.get_name())
 pop_size = 100
 
 pop_evolv, logs, nit, compute_time = solve_pb(dim=DIM, 
@@ -258,12 +278,12 @@ pop_evolv, logs, nit, compute_time = solve_pb(dim=DIM,
 #                            seed=37))
 
 
-pop_evolv, logs, nit, compute_time = solve_pb(dim=DIM,
-                                              my_algo=algo,
-                                              bounds=search_space,
-                                              optim=funcbias,
-                                              popsize=pop_size,
-                                              pop=pop_evolv)
+# pop_evolv, logs, nit, compute_time = solve_pb(dim=DIM,
+#                                               my_algo=algo,
+#                                               bounds=search_space,
+#                                               optim=funcbias,
+#                                               popsize=pop_size,
+#                                               pop=pop_evolv)
 
 print_solution(dimension=DIM,
                my_algo=algo,
