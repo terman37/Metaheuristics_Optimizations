@@ -41,8 +41,8 @@ def eval_cost(x, dim):
             F += z * z
         result = F + funcbias
     elif func_name == "schwefel":
-        F = abs(x[0]- funcval[0])
-        for i in range(1,dim - 1):
+        F = abs(x[0] - funcval[0])
+        for i in range(1, dim - 1):
             z = x[i] - funcval[i]
             F = max(F, abs(z))
         result = F + funcbias
@@ -50,9 +50,9 @@ def eval_cost(x, dim):
         F = 0
         y = np.empty(dim)
         for i in range(dim - 1):
-            y[i] = x[i] - funcval[i] +1
-        for i in range(dim-2):
-            F += 100 * ((y[i]**2-y[i+1])**2) + (y[i]-1)**2
+            y[i] = x[i] - funcval[i] + 1
+        for i in range(dim - 2):
+            F += 100 * ((y[i] ** 2 - y[i + 1]) ** 2) + (y[i] - 1) ** 2
         result = F + funcbias
     elif func_name == "rastrigin":
         F = 0
@@ -90,7 +90,7 @@ class My_problem:
         self.glob_opt = glob_opt
 
     def fitness(self, x):
-        result = abs(eval_cost(x, self.dimension)-funcbias)
+        result = abs(eval_cost(x, self.dimension) - funcbias)
         return [result]
 
     def get_bounds(self):
@@ -100,7 +100,6 @@ class My_problem:
 
 
 def solve_pb(dim, my_algo, bounds, optim, popsize, pop=None):
-
     prob = pg.problem(My_problem(dim, bounds, optim))
     if pop is None:
         pop = pg.population(prob, popsize)
@@ -109,7 +108,7 @@ def solve_pb(dim, my_algo, bounds, optim, popsize, pop=None):
     pop = my_algo.evolve(pop)
     t2 = time.time()
 
-    time_diff = t2-t1
+    time_diff = t2 - t1
     if my_algo.get_name().split(":")[0] == "PSO":
         extract_algo = my_algo.extract(pg.pso)
     elif my_algo.get_name().split(":")[0] == "GPSO":
@@ -125,7 +124,9 @@ def solve_pb(dim, my_algo, bounds, optim, popsize, pop=None):
     elif my_algo.get_name().split(":")[0] == "ABC":
         extract_algo = my_algo.extract(pg.bee_colony)
     elif my_algo.get_name().split(":")[0] == "xNES":
-        extract_algo = my_algo.extract(pg.bee_colony)
+        extract_algo = my_algo.extract(pg.xnes)
+    elif my_algo.get_name().split(":")[0] == "CMA-ES":
+        extract_algo = my_algo.extract(pg.cmaes)
     elif my_algo.get_name().split(":")[0] == "SA":
         extract_algo = my_algo.extract(pg.simulated_annealing)
 
@@ -142,20 +143,20 @@ def print_solution(dimension, my_algo, pop_evolved, log, niter, duration):
     solution_x = pop_evolved.champion_x
     fitness = pop_evolved.champion_f[0]
     n_evals = pop_evolved.problem.get_fevals()
-    print('-'*60)
+    print('-' * 60)
     print("Function: %s" % funcs_dispname[func_name])
     print("Problem dimension: %d" % dimension)
     print("Search Space : ", search_space)
     print("Global Optimum: %.2f" % funcbias)
-    print('-'*60)
+    print('-' * 60)
     print("Algorithm: %s" % algorithm_name)
     print("Parameters: \n%s" % parameters)
-    print('-'*60)
+    print('-' * 60)
     print("Fitness: %f" % fitness)
     print("Solution: ")
-    with pd.option_context('display.max_rows',8):
+    with pd.option_context('display.max_rows', 8):
         print(pd.DataFrame(solution_x, columns=['X']))
-    print('-'*60)
+    print('-' * 60)
     print("Nb of functions evaluations: %d" % n_evals)
     print("Stopping criterion: after %d iterations" % niter)
     print("computational time: %.3f seconds" % duration)
@@ -165,26 +166,31 @@ def print_solution(dimension, my_algo, pop_evolved, log, niter, duration):
     plt.ylabel("fitness: f(x)-f(x*)")
     plt.show()
 
+
 # function to choose: sphere, schwefel, rosenbrock, rastrigin, griewank, ackley
 func_name = 'schwefel'
 funcval, funcbias, search_space = read_values(func_name)
 
 DIM = 500
 
-gen = 5000
-pop_size = 100
+gen = 40000
+pop_size = 250
 
-algo = pg.algorithm(pg.pso(gen=gen,
-                           omega=0.75,
-                           eta1=1.5,
-                           eta2=2,
-                           max_vel=0.9,
-                           variant=1,
-                           neighb_type=3,
-                           neighb_param=10,
-                           memory=False,
-                           seed=37))
+# algo = pg.algorithm(pg.pso_gen(gen=gen,
+#                            omega=0.73,
+#                            eta1=0.5, #social
+#                            eta2=2.5, #cognitive
+#                            max_vel=0.7,
+#                            variant=1,
+#                            neighb_type=1,
+#                            neighb_param=5,
+#                            memory=False,
+#                            seed=37))
 
+# algo = pg.algorithm(pg.de(gen=gen, F=0.1, CR=0.85, variant=2, ftol=1e-06, xtol=1e-06, seed=37))
+
+# algo = pg.algorithm(pg.xnes(gen=gen, eta_mu=- 1, eta_sigma=- 1, eta_b=- 1, sigma0=- 1, ftol=1e-06, xtol=1e-06, memory=False, force_bounds=False, seed=37))
+# algo = pg.algorithm(pg.cmaes(gen=gen, cc=- 1, cs=- 1, c1=- 1, cmu=- 1, sigma0=0.5, ftol=1e-06, xtol=1e-06, memory=False, force_bounds=False, seed=37))
 # algo = pg.algorithm(pg.sade(gen=gen,
 #                             variant=6,
 #                             variant_adptv=1,
@@ -211,25 +217,37 @@ algo = pg.algorithm(pg.pso(gen=gen,
 #                                            start_range=1.0,
 #                                            seed=37))
 
+algo = pg.algorithm(pg.sga(gen=gen,
+                           cr=0.85,
+                           eta_c=1.0,  # distribution index for sbx crossover
+                           m=0.02,
+                           param_m=5,
+                           # distribution index (polynomial mutation), gaussian width (gaussian mutation) or inactive (uniform mutation)
+                           param_s=10,
+                           # the number of best individuals to use in “truncated” selection or the size of the tournament in tournament selection.
+                           crossover='sbx',  # One of exponential, binomial, single or sbx
+                           mutation='polynomial',  # One of gaussian, polynomial or uniform
+                           selection='truncated',  # One of tournament, truncated.
+                           seed=37))
+#
 # algo = pg.algorithm(pg.sga(gen=gen,
-#                            cr=0.85,
-#                            eta_c=1.0, # distribution index for sbx crossover
+#                            cr=0.8,
+#                            eta_c=5.0, # distribution index for sbx crossover
 #                            m=0.01,
-#                            param_m=5, # distribution index (polynomial mutation), gaussian width (gaussian mutation) or inactive (uniform mutation)
+#                            param_m=1, # distribution index (polynomial mutation), gaussian width (gaussian mutation) or inactive (uniform mutation)
 #                            param_s=10, # the number of best individuals to use in “truncated” selection or the size of the tournament in tournament selection.
 #                            crossover='sbx', # One of exponential, binomial, single or sbx
 #                            mutation='polynomial', # One of gaussian, polynomial or uniform
 #                            selection='truncated', # One of tournament, truncated.
-#                            seed=37))
+#                            seed=37
+#                           ))
 
-
-
-pop_evolv, logs, nit, compute_time = solve_pb(dim=DIM, 
-                                              my_algo=algo, 
-                                              bounds=search_space, 
-                                              optim=funcbias, 
+print(algo.get_name().split(":")[0])
+pop_evolv, logs, nit, compute_time = solve_pb(dim=DIM,
+                                              my_algo=algo,
+                                              bounds=search_space,
+                                              optim=funcbias,
                                               popsize=pop_size)
-
 
 # gen = 10000
 # pop_size = 100
@@ -260,10 +278,10 @@ print_solution(dimension=DIM,
                log=logs,
                niter=nit,
                duration=compute_time
-              )
+               )
 
 bestx = pop_evolv.champion_x
-fitness = eval_cost(bestx,500)-funcbias
-print("best fitness:",fitness)
+fitness = eval_cost(bestx, 500) - funcbias
+print("best fitness:", fitness)
 # print("\t\t%s" % algo.get_name())
 # print("\t\tfitness: %.1f" % fitness)

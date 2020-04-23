@@ -88,7 +88,7 @@ Simple function, using a BFGS algorithm (Quasi Newton family) can solve it fast:
 | Dimension 50                                                 | Dimension 500                                                |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | [notebook](4-Schwefel-Problem-2_21/schwefel_problem_221_d50.ipynb) | [notebook](4-Schwefel-Problem-2_21/schwefel_problem_221_d500.ipynb) |
-| <img src="4-Schwefel-Problem-2_21/d50.png" alt="d50" style="zoom:50%;" /> |                                                              |
+| <img src="4-Schwefel-Problem-2_21/d50.png" alt="d50" style="zoom:50%;" /> | <img src="4-Schwefel-Problem-2_21/d500.png" alt="d500" style="zoom:50%;" /> |
 
 
 
