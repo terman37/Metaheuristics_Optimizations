@@ -1,5 +1,13 @@
 # Metaheuristics optimizations:
 
+## Setup
+
+Run on python 3.7
+
+```bash
+pip install -r requirements.txt
+```
+
 ## Discrete Optimization:
 
 ### TSP problems:
