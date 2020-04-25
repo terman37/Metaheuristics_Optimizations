@@ -7,6 +7,9 @@ import matplotlib.pyplot as plt
 
 from numba import jit
 import pygmo as pg
+import pyswarms as ps
+
+
 
 funcs = {"sphere": 0, "schwefel": 1, "rosenbrock": 2, "rastrigin": 3, "griewank": 4, "ackley": 5}
 funcs_dispname = {"sphere": "F1 : Shifted Sphere Function",
@@ -166,6 +169,13 @@ def print_solution(dimension, my_algo, pop_evolved, log, niter, duration):
     plt.ylabel("fitness: f(x)-f(x*)")
     plt.show()
 
+def fitness(parts):
+    fit = np.zeros(parts.shape[0])
+    for x in range(parts.shape[0]):
+        fit[x] = abs(eval_cost(parts[x],DIM)-funcbias)
+
+    return fit
+
 
 # function to choose: sphere, schwefel, rosenbrock, rastrigin, griewank, ackley
 func_name = 'rosenbrock'
@@ -173,130 +183,34 @@ funcval, funcbias, search_space = read_values(func_name)
 
 DIM = 500
 
-gen = 20000
-pop_size = 250
 
-algo = pg.algorithm(pg.pso(gen=gen,
-                           omega=0.73,
-                           eta1=2.05, #social
-                           eta2=2.05, #cognitive
-                           max_vel=0.5,
-                           variant=5,
-                           neighb_type=4,
-                           neighb_param=10,
-                           memory=False,
-                           seed=37))
+# Create bounds
+x_min = search_space[0] * np.ones(DIM)
+x_max = search_space[1] * np.ones(DIM)
+bounds = (x_min, x_max)
 
-# algo = pg.algorithm(pg.de(gen=gen, F=0.1, CR=0.85, variant=2, ftol=1e-06, xtol=1e-06, seed=37))
+ini = np.zeros((250,DIM))
 
-# algo = pg.algorithm(pg.xnes(gen=gen, eta_mu=- 1, eta_sigma=- 1, eta_b=- 1, sigma0=- 1, ftol=1e-06, xtol=1e-06, memory=False, force_bounds=False, seed=37))
-# algo = pg.algorithm(pg.cmaes(gen=gen, cc=- 1, cs=- 1, c1=- 1, cmu=- 1, sigma0=0.5, ftol=1e-06, xtol=1e-06, memory=False, force_bounds=False, seed=37))
-algo = pg.algorithm(pg.sade(gen=gen,
-                            variant=14,
-                            variant_adptv=1,
-                            ftol=1e-03,
-                            xtol=1e-03,
-                            memory=False,
-                            seed=37))
+# Initialize swarm
+options = {'c1': 2.05, 'c2': 5, 'w':0.5}
+
+# Call instance of PSO with bounds argument
+optimizer = ps.single.GlobalBestPSO(n_particles=250, dimensions=DIM, options=options, bounds=bounds)
+
+# Perform optimization
+cost, pos = optimizer.optimize(fitness, iters=4000)
+
+
+
 #
-algo = pg.algorithm(pg.de1220(gen=gen,
-                              ftol=1e-03,
-                              xtol=1e-03,
-                              memory=False,
-                              seed=37))
-print(range(1,18))
-# algo = pg.algorithm(pg.bee_colony(gen=gen))
-
-# algo = pg.algorithm(pg.simulated_annealing(Ts=10.0,
-#                                            Tf=0.001,
-#                                            n_T_adj=100,
-#                                            n_range_adj=10,
-#                                            bin_size=20,
-#                                            start_range=1.0,
-#                                            seed=37))
-
-# algo = pg.algorithm(pg.sga(gen=gen,
-#                            cr=0.85,
-#                            eta_c=1.0,  # distribution index for sbx crossover
-#                            m=0.02,
-#                            param_m=5,
-#                            # distribution index (polynomial mutation), gaussian width (gaussian mutation) or inactive (uniform mutation)
-#                            param_s=10,
-#                            # the number of best individuals to use in “truncated” selection or the size of the tournament in tournament selection.
-#                            crossover='sbx',  # One of exponential, binomial, single or sbx
-#                            mutation='polynomial',  # One of gaussian, polynomial or uniform
-#                            selection='truncated',  # One of tournament, truncated.
-#                            seed=37))
+# options = {'c1': [1.3, 1.8],
+#             'c2': [1.8, 2.2],
+#             'w' : [.4, 1],
+#             'k' : [3, 10],
+#             'p':2}
 #
-# algo = pg.algorithm(pg.sga(gen=gen,
-#                            cr=0.8,
-#                            eta_c=5.0, # distribution index for sbx crossover
-#                            m=0.01,
-#                            param_m=1, # distribution index (polynomial mutation), gaussian width (gaussian mutation) or inactive (uniform mutation)
-#                            param_s=10, # the number of best individuals to use in “truncated” selection or the size of the tournament in tournament selection.
-#                            crossover='sbx', # One of exponential, binomial, single or sbx
-#                            mutation='polynomial', # One of gaussian, polynomial or uniform
-#                            selection='truncated', # One of tournament, truncated.
-#                            seed=37
-#                           ))
-
-print(algo.get_name().split(":")[0])
-pop_evolv, logs, nit, compute_time = solve_pb(dim=DIM,
-                                              my_algo=algo,
-                                              bounds=search_space,
-                                              optim=funcbias,
-                                              popsize=pop_size)
-
-# gen = 10000
-# pop_size = 100
-# algo = pg.algorithm(pg.pso(gen=gen,
-#                            omega=0.7,
-#                            eta1=1.5,
-#                            eta2=2,
-#                            max_vel=0.5,
-#                            variant=6,
-#                            neighb_type=3,
-#                            neighb_param=4,
-#                            memory=False,
-#                            seed=37))
-# algo = pg.algorithm(pg.de1220(gen=gen))
-#
-#
-# gen = 5000
-#
-# algo = pg.algorithm(pg.de1220(gen=gen,
-#                               allowed_variants=[2, 3, 7, 10, 13, 14, 15, 16], #[2, 3, 7, 10, 13, 14, 15, 16,1,4,5,6,8,9,11,12,17,18],
-#                               variant_adptv=1,
-#                               ftol=1e-03,
-#                               xtol=1e-03,
-#                               memory=False,
-#                               seed=37))
-# algo = pg.algorithm(pg.sade(gen=gen,
-#                             variant=6,
-#                             variant_adptv=1,
-#                             ftol=1e-03,
-#                             xtol=1e-03,
-#                             memory=True,
-#                             seed=37))
-# algo = pg.algorithm(pg.sga(gen=gen))
-
-# pop_evolv, logs, nit, compute_time = solve_pb(dim=DIM,
-#                                               my_algo=algo,
-#                                               bounds=search_space,
-#                                               optim=funcbias,
-#                                               popsize=pop_size,
-#                                               pop=pop_evolv)
-
-print_solution(dimension=DIM,
-               my_algo=algo,
-               pop_evolved=pop_evolv,
-               log=logs,
-               niter=nit,
-               duration=compute_time
-               )
-
-bestx = pop_evolv.champion_x
-fitness = eval_cost(bestx, 500) - funcbias
-print("best fitness:", fitness)
-# print("\t\t%s" % algo.get_name())
-# print("\t\tfitness: %.1f" % fitness)
+# from pyswarms.utils.search import RandomSearch
+# g = RandomSearch(ps.single.LocalBestPSO, n_particles=100, dimensions=DIM,
+#                    options=options, bounds=bounds,objective_func=fitness, n_selection_iters=2, iters=5000)
+# best_score, best_options = g.search()
+# print(best_score,best_options)
