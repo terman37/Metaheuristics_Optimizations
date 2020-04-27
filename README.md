@@ -76,7 +76,27 @@ Optimization done in dimension 50 and 500.
 
 #### Note on the use CEC functions and data: 
 
-Data and functions code have been provided in C. In order to use it easily with Python, I extracted data to csv file using this [notebook](0-datah_to_csv.ipynb), and recoded the function evaluation in python. To speed up the execution of the code, I used the Numba library which basically recompile the functions at execution time, making execution much faster. 
+Data and functions code have been provided in C. In order to use it easily with Python, I extracted data to csv file using this [notebook](0-datah_to_csv.ipynb), and recoded the function evaluation in python. To speed up the execution of the code, I used the **Numba** library which basically recompile the functions at execution time, making execution much faster. 
+
+#### Dimension 50 Results:
+
+|                 |       F1       |        F2        |         F3         |        F4         |        F5        |       F6       |
+| --------------- | :------------: | :--------------: | :----------------: | :---------------: | :--------------: | :------------: |
+|                 | Shifted Sphere | Schwefel pb 2.21 | Shifted Rosenbrock | Shifted Rastrigin | Shifted Griewank | Shifted Ackley |
+| Algo used       |      BFGS      |    sa-DE1220     |         DE         |        SGA        |       PSO        |      ABC       |
+| Fitness         |       0        |        ~0        |         ~0         |        ~0         |        ~0        |       ~0       |
+| Nb of func eval |      520       |      500100      |       273450       |      1250000      |     1250000      |     750000     |
+| Comp Time (sec) |      0.22      |       1.94       |        1.15        |       6.93        |       7.63       |      4.33      |
+
+#### Dimension 500 Results:
+
+|                 |       F1       |        F2        |         F3         |        F4         |        F5        |       F6       |
+| --------------- | :------------: | :--------------: | :----------------: | :---------------: | :--------------: | :------------: |
+|                 | Shifted Sphere | Schwefel pb 2.21 | Shifted Rosenbrock | Shifted Rastrigin | Shifted Griewank | Shifted Ackley |
+| Algo used       |      BFGS      |       SGA        |     sa-DE1220      |       saDE        |       PSO        |      PSO       |
+| Fitness         |       0        |       5.83       |        865         |        ~0         |        ~0        |       ~0       |
+| Nb of func eval |      5522      |     5000000      |      5000000       |      555400       |      750000      |     500000     |
+| Comp Time (sec) |      0.28      |      96.08       |         44         |        9.7        |      37.95       |     22.68      |
 
 
 
@@ -87,7 +107,7 @@ Simple function, using a BFGS algorithm (Quasi Newton family) can solve it fast:
 | Dimension 50                                                 | Dimension 500                                                |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | [notebook](3-shifted-Sphere/shifted_sphere_d50.ipynb)        | [notebook](3-shifted-Sphere/shifted_sphere_d500.ipynb)       |
-| <img src="3-shifted-Sphere/d50.png" alt="F1-D50" style="zoom:50%;" /> | <img src="3-shifted-Sphere/d500.png" alt="F1-D500" style="zoom:50%;" /> |
+| <img src="3-shifted-Sphere/d50.png" alt="F1-D50" style="zoom: 80%;" /> | <img src="3-shifted-Sphere/d500.png" alt="F1-D500" style="zoom: 80%;" /> |
 
 
 
@@ -96,7 +116,7 @@ Simple function, using a BFGS algorithm (Quasi Newton family) can solve it fast:
 | Dimension 50                                                 | Dimension 500                                                |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | [notebook](4-Schwefel-Problem-2_21/schwefel_problem_221_d50.ipynb) | [notebook](4-Schwefel-Problem-2_21/schwefel_problem_221_d500.ipynb) |
-| <img src="4-Schwefel-Problem-2_21/d50.png" alt="d50" style="zoom:50%;" /> | <img src="4-Schwefel-Problem-2_21/d500.png" alt="d500" style="zoom:50%;" /> |
+| <img src="4-Schwefel-Problem-2_21/d50.png" alt="d50" style="zoom: 80%;" /> | <img src="4-Schwefel-Problem-2_21/d500.png" alt="d500" style="zoom: 80%;" /> |
 
 
 
@@ -105,7 +125,7 @@ Simple function, using a BFGS algorithm (Quasi Newton family) can solve it fast:
 | Dimension 50                                                 | Dimension 500                                                |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | [notebook](5-shifted-Rosenbrock/shifted_rosenbrock_d50.ipynb) | [notebook](5-shifted-Rosenbrock/shifted_rosenbrock_d500.ipynb) |
-| <img src="5-shifted-Rosenbrock/d50.png" alt="d50" style="zoom:50%;" /> |                                                              |
+| <img src="5-shifted-Rosenbrock/d50.png" alt="d50" style="zoom: 80%;" /> | <img src="5-shifted-Rosenbrock/d500.png" alt="d500" style="zoom: 80%;" /> |
 
 
 
@@ -114,7 +134,7 @@ Simple function, using a BFGS algorithm (Quasi Newton family) can solve it fast:
 | Dimension 50                                                 | Dimension 500                                                |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | [notebook](6-shifted-Rastrigin/shifted_rastrigin_d50.ipynb)  | [notebook](6-shifted-Rastrigin/shifted_rastrigin_d500.ipynb) |
-| <img src="6-shifted-Rastrigin/d50.png" alt="d50" style="zoom:50%;" /> | <img src="6-shifted-Rastrigin/d500.png" alt="d500" style="zoom:50%;" /> |
+| <img src="6-shifted-Rastrigin/d50.png" alt="d50" style="zoom: 80%;" /> | <img src="6-shifted-Rastrigin/d500.png" alt="d500" style="zoom: 80%;" /> |
 
 
 
@@ -123,7 +143,7 @@ Simple function, using a BFGS algorithm (Quasi Newton family) can solve it fast:
 | Dimension 50                                                 | Dimension 500                                                |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | [notebook](6-shifted-Griewank/shifted_griewank_d50.ipynb)    | [notebook](6-shifted-Griewank/shifted_griewank_d500.ipynb)   |
-| <img src="7-shifted-Griewank/d50.png" alt="d50" style="zoom:50%;" /> | <img src="7-shifted-Griewank/d500.png" alt="d500" style="zoom:50%;" /> |
+| <img src="7-shifted-Griewank/d50.png" alt="d50" style="zoom: 80%;" /> | <img src="7-shifted-Griewank/d500.png" alt="d500" style="zoom: 80%;" /> |
 
 
 
@@ -132,7 +152,7 @@ Simple function, using a BFGS algorithm (Quasi Newton family) can solve it fast:
 | Dimension 50                                                 | Dimension 500                                                |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | [notebook](6-shifted-Ackley/shifted_ackley_d50.ipynb)        | [notebook](6-shifted-Ackley/shifted_ackley_d500.ipynb)       |
-| <img src="8-shifted-Ackley/d50.png" alt="d50" style="zoom:50%;" /> | <img src="8-shifted-Ackley/d500.png" alt="d500" style="zoom:50%;" /> |
+| <img src="8-shifted-Ackley/d50.png" alt="d50" style="zoom: 80%;" /> | <img src="8-shifted-Ackley/d500.png" alt="d500" style="zoom: 80%;" /> |
 
 
 
