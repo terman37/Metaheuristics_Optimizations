@@ -74,29 +74,39 @@ Target is to optimize benchmark functions (F1 to F6) from CEC2008: description [
 
 Optimization done in dimension 50 and 500.
 
+Library used: Scipy / Pygmo
+
 #### Note on the use CEC functions and data: 
 
 Data and functions code have been provided in C. In order to use it easily with Python, I extracted data to csv file using this [notebook](0-datah_to_csv.ipynb), and recoded the function evaluation in python. To speed up the execution of the code, I used the **Numba** library which basically recompile the functions at execution time, making execution much faster. 
 
 #### Dimension 50 Results:
 
-|                 |       F1       |        F2        |         F3         |        F4         |        F5        |       F6       |
-| --------------- | :------------: | :--------------: | :----------------: | :---------------: | :--------------: | :------------: |
-|                 | Shifted Sphere | Schwefel pb 2.21 | Shifted Rosenbrock | Shifted Rastrigin | Shifted Griewank | Shifted Ackley |
-| Algo used       |      BFGS      |    sa-DE1220     |         DE         |        SGA        |       PSO        |      ABC       |
-| Fitness         |       0        |        ~0        |         ~0         |        ~0         |        ~0        |       ~0       |
-| Nb of func eval |      520       |      500100      |       273450       |      1250000      |     1250000      |     750000     |
-| Comp Time (sec) |      0.22      |       1.94       |        1.15        |       6.93        |       7.63       |      4.33      |
+I used Pygmo for optimizing all functions except shifted sphere that i did using scipy.
+
+For dimension 50, most of the algorithm are able to converge to global optimum with some parameters finetuning. I decided to try most of them to compare.
+
+|                 |                              F1                              |                              F2                              |                              F3                              |                              F4                              |                              F5                              |                              F6                              |
+| --------------- | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+|                 |                        Shifted Sphere                        |                       Schwefel pb 2.21                       |                      Shifted Rosenbrock                      |                      Shifted Rastrigin                       |                       Shifted Griewank                       |                        Shifted Ackley                        |
+|                 |    [notebook](3-shifted-Sphere/shifted_sphere_d50.ipynb)     | [notebook](4-Schwefel-Problem-2_21/schwefel_problem_221_d50.ipynb) | [notebook](5-shifted-Rosenbrock/shifted_rosenbrock_d50.ipynb) | [notebook](6-shifted-Rastrigin/shifted_rastrigin_d50.ipynb)  |  [notebook](6-shifted-Griewank/shifted_griewank_d50.ipynb)   |    [notebook](6-shifted-Ackley/shifted_ackley_d50.ipynb)     |
+| Algo used       | [BFGS](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize) | [sa-DE1220](https://esa.github.io/pygmo2/algorithms.html#pygmo.de1220) | [DE](https://esa.github.io/pygmo2/algorithms.html#pygmo.de)  | [SGA](https://esa.github.io/pygmo2/algorithms.html#pygmo.sga) | [PSO](https://esa.github.io/pygmo2/algorithms.html#pygmo.pso) | [ABC](https://esa.github.io/pygmo2/algorithms.html#pygmo.bee_colony) |
+| Fitness         |                              0                               |                              ~0                              |                              ~0                              |                              ~0                              |                              ~0                              |                              ~0                              |
+| Nb of func eval |                             520                              |                           500 100                            |                           273 450                            |                          1 250 000                           |                          1 250 000                           |                           750 000                            |
+| Comp Time (sec) |                             0.22                             |                             1.94                             |                             1.15                             |                             6.93                             |                             7.63                             |                             4.33                             |
 
 #### Dimension 500 Results:
 
-|                 |       F1       |        F2        |         F3         |        F4         |        F5        |       F6       |
-| --------------- | :------------: | :--------------: | :----------------: | :---------------: | :--------------: | :------------: |
-|                 | Shifted Sphere | Schwefel pb 2.21 | Shifted Rosenbrock | Shifted Rastrigin | Shifted Griewank | Shifted Ackley |
-| Algo used       |      BFGS      |       SGA        |     sa-DE1220      |       saDE        |       PSO        |      PSO       |
-| Fitness         |       0        |       5.83       |        865         |        ~0         |        ~0        |       ~0       |
-| Nb of func eval |      5522      |     5000000      |      5000000       |      555400       |      750000      |     500000     |
-| Comp Time (sec) |      0.28      |      96.08       |         44         |        9.7        |      37.95       |     22.68      |
+Much more difficult in dimension 500, PSO shows good results. I have not been able to reach global optimum for Schwefel problem and Rosenbrock within a limit of 5.000.000 of function evaluations.
+
+|                 |                              F1                              |                              F2                              |                              F3                              |                              F4                              |                              F5                              |                              F6                              |
+| --------------- | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+|                 |                        Shifted Sphere                        |                       Schwefel pb 2.21                       |                      Shifted Rosenbrock                      |                      Shifted Rastrigin                       |                       Shifted Griewank                       |                        Shifted Ackley                        |
+|                 |    [notebook](3-shifted-Sphere/shifted_sphere_d500.ipynb)    | [notebook](4-Schwefel-Problem-2_21/schwefel_problem_221_d500.ipynb) | [notebook](5-shifted-Rosenbrock/shifted_rosenbrock_d500.ipynb) | [notebook](6-shifted-Rastrigin/shifted_rastrigin_d500.ipynb) |  [notebook](6-shifted-Griewank/shifted_griewank_d500.ipynb)  |    [notebook](6-shifted-Ackley/shifted_ackley_d500.ipynb)    |
+| Algo used       | [BFGS](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize) | [SGA](https://esa.github.io/pygmo2/algorithms.html#pygmo.sga) | [sa-DE1220](https://esa.github.io/pygmo2/algorithms.html#pygmo.de1220) | [saDE](https://esa.github.io/pygmo2/algorithms.html#pygmo.sade) | [PSO](https://esa.github.io/pygmo2/algorithms.html#pygmo.pso) | [PSO](https://esa.github.io/pygmo2/algorithms.html#pygmo.pso) |
+| Fitness         |                              0                               |                             5.83                             |                             865                              |                              ~0                              |                              ~0                              |                              ~0                              |
+| Nb of func eval |                            5 522                             |                          5 000 000                           |                          5 000 000                           |                           555 400                            |                           750 000                            |                           500 000                            |
+| Comp Time (sec) |                             0.28                             |                            96.08                             |                              44                              |                             9.7                              |                            37.95                             |                            22.68                             |
 
 
 
